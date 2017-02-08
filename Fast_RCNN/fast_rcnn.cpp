@@ -5,10 +5,11 @@ using namespace cv;
 int main(int argc, char **argv) {
 
   std::cout << "Hello World!" << endl;
-  if (argc <= 2) {
+  if (argc < 1) {
     std::cout << "No input" << endl;
+    return -1;
   }
-  VideoCapture video;
+  VideoCapture video(argv[1]);
   if (!video.isOpened())
     return -1;
   while (true) {

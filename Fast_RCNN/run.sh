@@ -5,4 +5,6 @@
 # Created Time: Wed Feb  8 17:32:54 2017
 #########################################################################
 #!/bin/bash
-g++ fast_rcnn.cpp -o fast_rcnn
+cmake .
+make
+./Fast_RCNN Skating.mp4

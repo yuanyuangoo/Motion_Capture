@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 2.8)
+project( Fast_RCNN )
+find_package( OpenCV REQUIRED )
+add_executable( Fast_RCNN fast_rcnn.cpp )
+target_link_libraries( Fast_RCNN ${OpenCV_LIBS} )

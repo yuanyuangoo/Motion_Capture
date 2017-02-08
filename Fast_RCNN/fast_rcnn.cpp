@@ -1,10 +1,7 @@
-/*************************************************************************
-    > File Name: fast_rcnn.cpp
-    > Author: ma6174
-    > Mail: ma6174@163.com 
-    > Created Time: Wed Feb  8 13:27:49 2017
- ************************************************************************/
-
-#include<iostream>
+#include <iostream>
 using namespace std;
-
+int main(int argc,char** argv)
+{
+    std::cout << "Hello World!" << endl;
+    return 0;
+}

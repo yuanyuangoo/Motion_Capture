@@ -5,6 +5,8 @@
 # Created Time: Wed Feb  8 17:32:54 2017
 #########################################################################
 #!/bin/bash
-cmake .
+cd build
+cmake ..
 make
-./Fast_RCNN Skating.mp4
+./Fast_RCNN ../Skating.mp4
+cd ..

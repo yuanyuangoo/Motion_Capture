@@ -1,3 +1,4 @@
+#pragma once
 #include <caffe/caffe.hpp>
 
 #ifdef USE_OPENCV
@@ -107,16 +108,5 @@ class NET{
 	private:
 		boost::shared_ptr< Net <float> > net_;
 };
-NET::NET(string net_def,string net)
-{
-#ifdef CPU_ONLY
-	Caffe::set_mode(Caffe::CPU);
-#else
-	Caffe::set_mode(Caffe::GPU);
-#endif
-	
-	net_.reset(new Net<float>(net_def,caffe::TEST));
-	net_->CopyTrainedLayersFrom(net);
-	
-}
+
 

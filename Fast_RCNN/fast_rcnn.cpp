@@ -117,3 +117,14 @@ detection_model::detection_model()
 	conf_detection.use_flipped=1;
 	conf_detection.use_gpu=1;
 }
+NET::NET(string net_def,string net)
+{
+#ifdef CPU_ONLY
+	Caffe::set_mode(Caffe::CPU);
+#else
+	Caffe::set_mode(Caffe::GPU);
+#endif
+	
+	net_.reset(new Net<float>(net_def,caffe::TEST));
+	net_->CopyTrainedLayersFrom(net);
+}

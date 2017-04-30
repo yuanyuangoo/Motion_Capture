@@ -4,9 +4,9 @@
 #ifdef USE_OPENCV
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui.hpp>
-#include <opencv2/dnn.hpp>
 #endif
 
+#include "img_blob.hpp"
 #include <algorithm>
 #include <map>
 #include <vector>
@@ -107,6 +107,19 @@ class NET{
 		NET(string net_def,string net);
 	private:
 		boost::shared_ptr< Net <float> > net_;
+};
+
+class Fast_RCNN
+{
+	public:
+	Fast_RCNN(cv::Mat mat_src);
+	private:
+	NET rpn_net;
+	NET fast_rcnn_net;
+	Opts opts;
+	detection_model proposal_detection_model;
+	cv::Mat m_src;
+	img_blob m_blob;
 };
 
 

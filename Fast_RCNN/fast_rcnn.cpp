@@ -109,7 +109,7 @@ detection_model::detection_model()
 	conf_detection.image_means(2)=103.939;
 	conf_detection.max_size=1000;
 	conf_detection.rng_seed=6;
-	conf_detection.scales=600;
+	conf_detection.scales=7;
 	conf_detection.test_binary=0;
 	conf_detection.test_max_size=1000;
 	conf_detection.test_nms=0.3;
@@ -127,4 +127,14 @@ NET::NET(string net_def,string net)
 	
 	net_.reset(new Net<float>(net_def,caffe::TEST));
 	net_->CopyTrainedLayersFrom(net);
+}
+Fast_RCNN::Fast_RCNN(cv::Mat mat_src)
+{
+	m_src=mat_src;
+	proposal_detection_model=detection_model();
+	opts=Opts();
+	NET rpn_net=NET(proposal_detection_model.proposal_net_def,proposal_detection_model.proposal_net);
+	cout<<"rpn_net is sucessful"<<endl;
+	NET fast_rcnn_net=NET(proposal_detection_model.detection_net_def,proposal_detection_model.detection_net);
+	cout<<"fast_rcnn_net is successful"<<endl;
 }

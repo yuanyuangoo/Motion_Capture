@@ -6,7 +6,6 @@
 #include <opencv2/highgui.hpp>
 #endif
 
-#include "img_blob.hpp"
 #include <algorithm>
 #include <map>
 #include <vector>
@@ -105,6 +104,9 @@ class detection_model
 class NET{
 	public:
 		NET(string net_def,string net);
+		NET();
+		void inputMat(cv::Mat src,detection_model proposal_detection_model);
+		cv::Mat prep_im_size(cv::Mat src,detection_model proposal_detection_model);
 	private:
 		boost::shared_ptr< Net <float> > net_;
 };
@@ -119,7 +121,6 @@ class Fast_RCNN
 	Opts opts;
 	detection_model proposal_detection_model;
 	cv::Mat m_src;
-	img_blob m_blob;
 };
 
 

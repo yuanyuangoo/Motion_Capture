@@ -117,6 +117,10 @@ detection_model::detection_model()
 	conf_detection.use_flipped=1;
 	conf_detection.use_gpu=1;
 }
+NET::NET()
+{
+
+}
 NET::NET(string net_def,string net)
 {
 #ifdef CPU_ONLY
@@ -127,6 +131,31 @@ NET::NET(string net_def,string net)
 	
 	net_.reset(new Net<float>(net_def,caffe::TEST));
 	net_->CopyTrainedLayersFrom(net);
+}
+void NET::inputMat(cv::Mat src,detection_model proposal_detection_model)
+{
+	cv::Mat sample_float;
+	src.convertTo(sample_float,CV_32FC3);
+	cv::Scalar channel_mean=cv::mean(sample_float);
+	cv::Mat mean=cv::Mat(src.rows,src.cols,sample_float.type(),channel_mean);
+	cv::Mat sample_normalized;
+	cv::subtract(sample_float,mean,sample_normalized);
+
+	cv::Mat im;
+	int im_size_min=min(src.cols,src.rows);
+	int im_size_max=max(src.cols,src.rows);
+	int im_scale=double(proposal_detection_model.conf_proposal.scales)/im_size_min;
+	
+	if(std::round(im_scale*im_size_max)>proposal_detection_model.conf_proposal.max_size)
+	{
+		im_scale=double(proposal_detection_model.conf_proposal.max_size);
+	}
+	cv::Size input_geometry_=cv::Size(round(src.cols*im_scale),round(src.rows*im_scale));
+	cv::resize(src,im,input_geometry_);
+
+	resize(sample_normalized,sample_normalized,input_geometry_);
+	Blob<float>* input_layer=net_->input_blobs()[0];
+
 }
 Fast_RCNN::Fast_RCNN(cv::Mat mat_src)
 {
